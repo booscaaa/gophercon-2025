@@ -1,0 +1,65 @@
+services:
+  service-1:
+    container_name: service-1
+    build:
+      context: "."
+      dockerfile: Dockerfile.service1
+    volumes:
+      - .:/api
+    ports:
+      - 8000:8000
+    depends_on: 
+      - postgres
+    networks:
+      - gophercon
+
+  service-2:
+    container_name: service-2
+    build:
+      context: "."
+      dockerfile: Dockerfile.service2
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/api
+    depends_on: 
+      - postgres
+    networks:
+      - gophercon
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: gophercon
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-gophercon:/var/lib/postgresql/data
+      - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - gophercon
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-gophercon:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - gophercon
+
+networks: 
+  gophercon:
+    driver: bridge
+
+volumes:
+  pgadmin-gophercon:
+  postgres-gophercon:
