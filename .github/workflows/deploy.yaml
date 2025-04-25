@@ -14,7 +14,6 @@ jobs:
       run: |
         touch config.json
         echo "${{ secrets.PROD_CONFIG }}" | base64 -d > config.json
-        cat config.json
 
     - name: Build image
       run: |
