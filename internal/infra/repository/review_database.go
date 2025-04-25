@@ -37,7 +37,6 @@ func (repository *reviewDatabaseRepository) Save(ctx context.Context, input dto.
 	}
 	_, err = stmt.ExecContext(
 		ctx,
-		"INSERT INTO review (name, description) VALUES ($1, $2);",
 		input.Name,
 		input.Description,
 	)
