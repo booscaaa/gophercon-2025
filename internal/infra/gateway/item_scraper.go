@@ -10,11 +10,11 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-type itemScraper struct {
+type itemScraperGateway struct {
 }
 
 // ScrapeItems implements domain.ItemScraperGateway.
-func (gateway *itemScraper) ScrapeItems(ctx context.Context) ([]domain.Item, error) {
+func (gateway *itemScraperGateway) ScrapeItems(ctx context.Context) ([]domain.Item, error) {
 	items := []domain.Item{}
 
 	pw, err := playwright.Run()
@@ -89,5 +89,5 @@ func (gateway *itemScraper) ScrapeItems(ctx context.Context) ([]domain.Item, err
 }
 
 func NewItemScraper() domain.ItemScraperGateway {
-	return &itemScraper{}
+	return &itemScraperGateway{}
 }

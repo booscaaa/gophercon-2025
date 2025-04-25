@@ -14,10 +14,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-type itemLLM struct{}
+type itemLLMGateway struct{}
 
 // GenerateRecomendation implements domain.ItemLLMGateway.
-func (gateway *itemLLM) GenerateRecomendation(
+func (gateway *itemLLMGateway) GenerateRecomendation(
 	ctx context.Context,
 	tools []dto.Tool,
 	items []domain.Item,
@@ -118,6 +118,6 @@ func (gateway *itemLLM) GenerateRecomendation(
 	return functions, nil
 }
 
-func NewItemLLM() domain.ItemLLMGateway {
-	return &itemLLM{}
+func NewItemLLMGateway() domain.ItemLLMGateway {
+	return &itemLLMGateway{}
 }

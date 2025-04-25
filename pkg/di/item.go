@@ -10,7 +10,7 @@ import (
 
 func NewItemUseCase(database *sqlx.DB) domain.ItemUseCase {
 	return usecase.NewItemUseCase(
-		gateway.NewItemLLM(),
+		gateway.NewItemLLMGateway(),
 		gateway.NewItemScraper(),
 		repository.NewItemDatabase(database),
 	)
