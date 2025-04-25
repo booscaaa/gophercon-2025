@@ -22,7 +22,8 @@ func Initialize(database *sqlx.DB) {
 	}).Handler)
 
 	router.Post("/review", reviewController.Save)
-	router.Post("/review-alexa", reviewController.GetTop3Reviews)
+	router.Post("/review/alexa", reviewController.GetTop3Reviews)
+	router.Get("/review/count", reviewController.Count)
 
 	fmt.Println("Server running on port 3000")
 	http.ListenAndServe(":3000", router)

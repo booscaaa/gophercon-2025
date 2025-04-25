@@ -1,6 +1,8 @@
 package postgres
 
 import (
+	"time"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/spf13/viper"
 
@@ -14,9 +16,10 @@ func Initialize() *sqlx.DB {
 		panic(err)
 	}
 
-	db.SetConnMaxIdleTime(10)
-	db.SetMaxOpenConns(10)
-	db.SetConnMaxLifetime(10)
+	db.SetConnMaxIdleTime(1 * time.Minute)
+	db.SetMaxOpenConns(99)
+	db.SetMaxIdleConns(10)
+	db.SetConnMaxLifetime(1 * time.Hour)
 
 	return db
 }
