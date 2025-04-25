@@ -9,12 +9,13 @@ WORKDIR /go/api
 COPY . .
 
 RUN mkdir deploy
+RUN mkdir deploy/config
 RUN go clean --modcache
 RUN go mod tidy
 
 RUN CGO_ENABLED=0 go build -o go_app cmd/main.go 
 RUN mv go_app ./deploy/go_app
-RUN mv config.json ./deploy/config.json
+RUN mv config.json ./deploy/config/config.json
 
 FROM scratch AS production
 
