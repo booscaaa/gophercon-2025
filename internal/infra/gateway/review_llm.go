@@ -12,10 +12,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-type reviewLLM struct{}
+type reviewLLMGateway struct{}
 
 // GetTop3Reviews implements domain.ReviewLLMGateway.
-func (r *reviewLLM) GetTop3Reviews(ctx context.Context, reviews []domain.Review) (*string, error) {
+func (gateway *reviewLLMGateway) GetTop3Reviews(ctx context.Context, reviews []domain.Review) (*string, error) {
 	var b bytes.Buffer
 
 	writer := tabwriter.NewWriter(&b, 0, 8, 1, '\t', tabwriter.AlignRight)
@@ -103,6 +103,6 @@ func (r *reviewLLM) GetTop3Reviews(ctx context.Context, reviews []domain.Review)
 	return &content, nil
 }
 
-func NewReviewLLM() domain.ReviewLLMGateway {
-	return &reviewLLM{}
+func NewReviewLLMGateway() domain.ReviewLLMGateway {
+	return &reviewLLMGateway{}
 }
