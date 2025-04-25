@@ -1,8 +1,28 @@
-FROM golang:1.24
+FROM alpine:latest AS timezone_build
+RUN apk --no-cache add tzdata ca-certificates  
+
+FROM golang:1.24.2-alpine3.21 AS builder
+RUN apk --no-cache add tzdata ca-certificates
+
+WORKDIR /go/api
+
+COPY . .
+
+RUN mkdir deploy
+RUN go clean --modcache
+RUN go mod tidy
+
+RUN CGO_ENABLED=0 go build -o go_app cmd/main.go 
+RUN mv go_app ./deploy/go_app
+RUN mv config.json ./deploy/config.json
+
+FROM scratch AS production
+
+COPY --from=timezone_build /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=timezone_build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+COPY --from=builder /go/api/deploy /api/
 
 WORKDIR /api
 
-# RUN go install github.com/playwright-community/playwright-go/cmd/playwright@latest
-# RUN playwright install chromium --with-deps
-
-CMD go run cmd/main.go serve
+CMD  ["./go_app", "serve"]
