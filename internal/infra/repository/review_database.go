@@ -28,17 +28,9 @@ func (repository *reviewDatabaseRepository) Fetch(ctx context.Context) ([]domain
 
 // Save implements domain.ReviewDatabaseRepository.
 func (repository *reviewDatabaseRepository) Save(ctx context.Context, input dto.Review) error {
-	stmt, err := repository.database.PrepareContext(
+	_, err := repository.database.PrepareContext(
 		ctx,
 		"INSERT INTO review (name, description) VALUES ($1, $2);",
-	)
-	if err != nil {
-		return err
-	}
-	_, err = stmt.ExecContext(
-		ctx,
-		input.Name,
-		input.Description,
 	)
 	return err
 }

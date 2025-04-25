@@ -6,12 +6,12 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/spf13/viper"
 
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/stdlib"
 )
 
 func Initialize() *sqlx.DB {
 	databaseUrl := viper.GetString("database.url")
-	db, err := sqlx.Connect("postgres", databaseUrl)
+	db, err := sqlx.Connect("pgx", databaseUrl)
 	if err != nil {
 		panic(err)
 	}
