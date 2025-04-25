@@ -12,7 +12,7 @@ import (
 func NewReviewController(database *sqlx.DB) domain.ReviewController {
 	return controller.NewReviewController(
 		usecase.NewReviewUseCase(
-			gateway.NewReviewLLM(),
+			gateway.NewReviewLLMGateway(),
 			repository.NewReviewDatabaseRepository(database),
 		),
 	)
