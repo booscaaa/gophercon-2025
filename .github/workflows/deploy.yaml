@@ -1,0 +1,50 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Config file access
+      run: |
+        touch config.json
+        echo "${{ secrets.PROD_CONFIG }}" | base64 -d > config.json
+        cat config.json
+
+    - name: Build image
+      run: |
+        docker build --progress=plain --no-cache -t gophercon:latest -f Dockerfile.service2 .
+        docker save -o ./gophercon:latest.tar gophercon:latest
+
+    - name: Copy file via scp
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_DIGITAL_OCEAN }}
+        username: ${{ secrets.USERNAME_DIGITAL_OCEAN }}
+        key: ${{ secrets.KEY_DIGITAL_OCEAN }}
+        port: ${{ secrets.PORT_DIGITAL_OCEAN }}
+        source: "gophercon:latest.tar"
+        target: "/opt/gophercon"
+
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_DIGITAL_OCEAN }}
+        username: ${{ secrets.USERNAME_DIGITAL_OCEAN }}
+        key: ${{ secrets.KEY_DIGITAL_OCEAN }}
+        port: ${{ secrets.PORT_DIGITAL_OCEAN }}
+        script: |
+          cd /opt/gophercon
+
+          docker load -i gophercon:latest.tar
+          docker ps -a -q --filter "name=gophercon" | grep -q . && docker rm -fv "gophercon" 
+          docker run -m 512m -d --name "gophercon" --network=host --restart unless-stopped  "gophercon:latest"
+        
+          docker image prune -af
+          cd ..
+          rm -rf gophercon
