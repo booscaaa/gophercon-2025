@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Config project
+      uses: actions/checkout@v4
+
     - name: Config file access
       run: |
         touch config.json
