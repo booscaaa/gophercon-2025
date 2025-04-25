@@ -17,6 +17,7 @@ jobs:
 
     - name: Build image
       run: |
+        ls
         docker build --progress=plain --no-cache -t gophercon:latest -f Dockerfile.service2 .
         docker save -o ./gophercon:latest.tar gophercon:latest
 
