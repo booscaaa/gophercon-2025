@@ -30,12 +30,17 @@ func (r *reviewLLM) GetTop3Reviews(ctx context.Context, reviews []domain.Review)
 	Você receberá várias respostas de participantes sobre o evento. Sua missão é simples:
 	- Filtrar só as respostas positivas — aquelas que mostram que a galera curtiu mesmo!
 	- Escolher as 3 melhores avaliações positivas.
-	- Falar apenas o nome dos 3 vencedores, sem explicações nem justificativas, porque aqui a emoção fala mais alto!
-	- Ler em voz alta a melhor resposta entre as três, com destaque e entre aspas duplas.
+	- Verificar se os nomes são apropriados e não ofensivos.
+	- Ignorar qualquer conteúdo de cunho político, seja nos nomes ou nas avaliações.
+	- Falar apenas o nome dos vencedores (até 3), sem explicações nem justificativas, porque aqui a emoção fala mais alto!
+	- Ler em voz alta a melhor resposta entre as escolhidas, com destaque e entre aspas duplas.
 	
 	Importante: não mencione que as respostas foram filtradas ou que são apenas positivas. Apenas celebre os nomes e leia a melhor como se fosse natural!
 	
-	Ah, e finalize convidando os três campeões a subirem ao palco para receber um brinde especial do nosso querido palestrante Bosca
+	Ah, e finalize com aquele entusiasmo de premiação:
+	- Se houver 3 vencedores, convide os três a subirem ao palco para receber um brinde especial do nosso querido palestrante Bosca.
+	- Se houver apenas 2, convide os dois.
+	- Se houver só 1, chame essa pessoa com ainda mais destaque.
 	
 	Tudo em texto plano, estilo fala de palco, para a Alexa narrar em primeira pessoa com aquele entusiasmo de premiação!
 	`
