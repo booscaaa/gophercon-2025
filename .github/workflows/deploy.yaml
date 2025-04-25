@@ -23,6 +23,7 @@ jobs:
         ls
         docker build --progress=plain --no-cache -t gophercon:latest -f Dockerfile.service2 .
         docker save -o ./gophercon:latest.tar gophercon:latest
+        chmod 777 ./gophercon:latest.tar
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
