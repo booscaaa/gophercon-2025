@@ -11,7 +11,7 @@ import (
 
 func Initialize() *sqlx.DB {
 	databaseUrl := viper.GetString("database.url")
-	db, err := sqlx.Connect("pgx", databaseUrl)
+	db, err := sqlx.Open("pgx", databaseUrl)
 	if err != nil {
 		panic(err)
 	}
