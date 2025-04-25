@@ -12,6 +12,11 @@ type reviewUseCase struct {
 	reviewRepository domain.ReviewDatabaseRepository
 }
 
+// Count implements domain.ReviewUseCase.
+func (usecase *reviewUseCase) Count(ctx context.Context) (int, error) {
+	return usecase.reviewRepository.Count(ctx)
+}
+
 // Fetch implements domain.ReviewUseCase.
 func (usecase *reviewUseCase) GetTop3Reviews(ctx context.Context) (*string, error) {
 	reviews, err := usecase.reviewRepository.Fetch(ctx)

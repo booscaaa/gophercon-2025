@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/booscaaa/hamburguer-go/internal/core/domain"
@@ -10,6 +11,21 @@ import (
 
 type reviewController struct {
 	reviewUseCase domain.ReviewUseCase
+}
+
+// Count implements domain.ReviewController.
+func (controller *reviewController) Count(response http.ResponseWriter, request *http.Request) {
+	ctx := request.Context()
+
+	count, err := controller.reviewUseCase.Count(ctx)
+	if err != nil {
+		http.Error(response, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	response.Header().Set("Content-Type", "text/plain")
+	response.WriteHeader(http.StatusOK)
+	response.Write(fmt.Appendf(nil, "%d", count))
 }
 
 // GetTop3Reviews implements domain.ReviewController.

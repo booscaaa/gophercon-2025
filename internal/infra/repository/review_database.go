@@ -12,6 +12,13 @@ type reviewDatabaseRepository struct {
 	database *sqlx.DB
 }
 
+// Count implements domain.ReviewDatabaseRepository.
+func (repository *reviewDatabaseRepository) Count(ctx context.Context) (int, error) {
+	var count int
+	err := repository.database.GetContext(ctx, &count, "SELECT COUNT(id) FROM review;")
+	return count, err
+}
+
 // Fetch implements domain.ReviewDatabaseRepository.
 func (repository *reviewDatabaseRepository) Fetch(ctx context.Context) ([]domain.Review, error) {
 	var reviews []domain.Review
