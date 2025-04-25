@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação GopherCon Latam</title>
+    <!-- Adicionar Sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header img {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #E31E24;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #E31E24;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            background-color: #000000;
+            color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #E31E24;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #b31a1f;
+        }
+
+        .button-disabled {
+            background-color: #666 !important;
+            cursor: not-allowed !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i0.wp.com/gopherconlatam.org/wp-content/uploads/2024/07/logo-red.png?resize=300%2C19&ssl=1" alt="GopherCon Latam Logo">
+            <h1>Avaliação Interativa GopherCon Latam</h1>
+            <p>Compartilhe sua opinião! A Alexa irá anunciar os 3 melhores comentários selecionados pela IA.</p>
+        </div>
+
+        <div class="form-container">
+            <form id="avaliacaoForm">
+                <div class="form-group">
+                    <label for="nome">Nome Completo <span id="nomeContador">(0/100)</span></label>
+                    <input type="text" 
+                           id="nome" 
+                           name="nome" 
+                           placeholder="Digite seu nome completo" 
+                           maxlength="100"
+                           required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="comentario">O que você está achando do evento? <span id="comentarioContador">(0/200)</span></label>
+                    <textarea id="comentario" 
+                              name="comentario" 
+                              placeholder="Compartilhe sua experiência! Os melhores comentários serão selecionados pela IA e anunciados pela Alexa..." 
+                              maxlength="200"
+                              required></textarea>
+                </div>
+
+                <button type="submit">Enviar Avaliação</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se já respondeu
+        function jaRespondeu() {
+            return localStorage.getItem('feedbackEnviado') === 'true';
+        }
+
+        // Desabilitar formulário se já respondeu
+        function verificarEstadoFormulario() {
+            if (jaRespondeu()) {
+                const form = document.getElementById('avaliacaoForm');
+                const inputs = form.getElementsByTagName('input');
+                const textarea = form.getElementsByTagName('textarea');
+                const button = form.getElementsByTagName('button')[0];
+
+                // Desabilitar todos os campos
+                for (let input of inputs) {
+                    input.disabled = true;
+                }
+                for (let area of textarea) {
+                    area.disabled = true;
+                }
+
+                inputNome.value = '';
+                textareaComentario.value = '';
+                
+                button.disabled = true;
+                button.classList.add('button-disabled');
+                button.textContent = 'Feedback já enviado';
+            }
+        }
+
+        function atualizarContador(elemento, contadorId, maxLength) {
+            const contador = document.getElementById(contadorId);
+            const caracteresRestantes = elemento.value.length;
+            contador.textContent = `(${caracteresRestantes}/${maxLength})`;
+        }
+
+        const inputNome = document.getElementById('nome');
+        const textareaComentario = document.getElementById('comentario');
+
+        inputNome.addEventListener('input', function() {
+            atualizarContador(this, 'nomeContador', 100);
+        });
+
+        textareaComentario.addEventListener('input', function() {
+            atualizarContador(this, 'comentarioContador', 200);
+        });
+
+        document.getElementById('avaliacaoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (jaRespondeu()) {
+                Swal.fire({
+                    title: 'Ops!',
+                    text: 'Você já enviou sua avaliação. Obrigado!',
+                    icon: 'info',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#E31E24',
+                    background: '#1a1a1a',
+                    color: '#fff'
+                });
+                return;
+            }
+
+            if (inputNome.value.length > 100 || textareaComentario.value.length > 200) {
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'Por favor, respeite o limite máximo de caracteres.',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#E31E24',
+                    background: '#1a1a1a',
+                    color: '#fff'
+                });
+                return;
+            }
+
+            const dados = {
+                name: inputNome.value,
+                description: textareaComentario.value
+            };
+
+            // Mostrar loading
+            Swal.fire({
+                title: 'Enviando...',
+                html: 'Aguarde enquanto processamos sua avaliação',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                background: '#1a1a1a',
+                color: '#fff'
+            });
+
+            try {
+                const response = await fetch('http://localhost:3000/review', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar avaliação');
+                }
+
+                localStorage.setItem('feedbackEnviado', 'true');
+                
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Obrigado pela sua avaliação! Fique atento para saber se seu comentário será um dos selecionados pela Alexa!',
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#E31E24',
+                    showConfetti: true,
+                    background: '#1a1a1a',
+                    color: '#fff'
+                });
+                
+                verificarEstadoFormulario();
+            } catch (error) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Erro ao enviar avaliação. Por favor, tente novamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#E31E24',
+                    background: '#1a1a1a',
+                    color: '#fff'
+                });
+                console.error('Erro:', error);
+            }
+        });
+
+        // Verificar estado do formulário ao carregar a página
+        window.addEventListener('load', verificarEstadoFormulario);
+    </script>
+</body>
+</html>
