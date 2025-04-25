@@ -17,16 +17,19 @@ type Review struct {
 type ReviewDatabaseRepository interface {
 	Fetch(context.Context) ([]Review, error)
 	Save(context.Context, dto.Review) error
+	Count(context.Context) (int, error)
 }
 
 type ReviewUseCase interface {
 	GetTop3Reviews(context.Context) (*string, error)
 	Save(context.Context, dto.Review) error
+	Count(context.Context) (int, error)
 }
 
 type ReviewController interface {
 	GetTop3Reviews(http.ResponseWriter, *http.Request)
 	Save(http.ResponseWriter, *http.Request)
+	Count(http.ResponseWriter, *http.Request)
 }
 
 type ReviewLLMGateway interface {
