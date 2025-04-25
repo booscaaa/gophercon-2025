@@ -17,8 +17,8 @@ func Initialize() *sqlx.DB {
 	}
 
 	db.SetConnMaxIdleTime(1 * time.Minute)
-	db.SetMaxOpenConns(500)
-	db.SetMaxIdleConns(250)
+	db.SetMaxOpenConns(1000)
+	db.SetMaxIdleConns(800)
 	db.SetConnMaxLifetime(1 * time.Hour)
 
 	return db
