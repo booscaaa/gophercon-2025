@@ -17,7 +17,7 @@ services:
     container_name: service-2
     build:
       context: "."
-      dockerfile: Dockerfile.service2
+      dockerfile: Dockerfile.dev.service2
     ports:
       - 3000:3000
     volumes:
