@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links Úteis - GopherCon LATAM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 90%;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile {
+            margin-bottom: 40px;
+        }
+
+        .profile img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 24px;
+        }
+
+        .profile h1 {
+            color: #E31E24;
+            margin: 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .profile p {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        .link {
+            background: #E31E24;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .link:hover {
+            background: transparent;
+            border-color: #E31E24;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(227, 30, 36, 0.3);
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .profile img {
+                max-width: 250px;
+            }
+
+            .profile h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <img src="https://i0.wp.com/gopherconlatam.org/wp-content/uploads/2024/07/logo-red.png?resize=300%2C19&ssl=1" alt="GopherCon Latam Logo">
+            <h1>Links Úteis - GopherCon LATAM</h1>
+            <p>Recursos e materiais da palestra "Gopherizando o Cotidiano com Golang"</p>
+        </div>
+        
+        <div class="links">
+            <a href="https://docs.google.com/presentation/d/1-0HydEyKtJY2SagAjfpETjUuRNEN8Enni8HpYXycY98/edit?usp=sharing" class="link">
+                <span>📊 Slides da Apresentação</span>
+            </a>
+            <a href="https://github.com/booscaaa/gophercon-2025" class="link">
+                <span>💻 Repositório do Projeto</span>
+            </a>
+            <a href="https://github.com/booscaaa" class="link">
+                <span>👨‍💻 Meu Perfil no GitHub</span>
+            </a>
+            <a href="https://github.com/playwright-community/playwright-go" class="link">
+                <span>🎭 Playwright para Go</span>
+            </a>
+            <a href="https://developer.amazon.com" class="link">
+                <span>🔊 Amazon Developer Portal</span>
+            </a>
+            <a href="https://platform.openai.com/docs/api-reference/introduction" class="link">
+                <span>🤖 OpenAI API Reference</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>GopherCon LATAM 2024 - Todos os direitos reservados</p>
+        </div>
+    </div>
+</body>
+</html>
