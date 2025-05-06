@@ -32,7 +32,7 @@ func (gateway *reviewLLMGateway) GetTop3Reviews(ctx context.Context, reviews []d
 	- Escolher as 3 melhores avaliações positivas.  
 	- Verificar se os nomes são apropriados e não ofensivos.  
 	- Ignorar qualquer conteúdo de cunho político, seja nos nomes ou nas avaliações.  
-	- Falar apenas os nomes dos vencedores (até 3), sem explicações nem justificativas, porque aqui a emoção fala mais alto! sem usar números ou enumeração na frente dos nomes, para que a Alexa fale como uma pessoa naturalmente — nada de “1 Fulano, 2 Ciclano”!  
+	- Falar apenas os nomes dos vencedores (até 3), sem explicações nem justificativas, porque aqui a emoção fala mais alto! sem usar números ou enumeração na frente dos nomes, para que a Alexa fale como uma pessoa naturalmente — nada de “1 Fulano, 2 Ciclano”! Adicione pausa entre os nomes para ficar natural!  
 	- Ler em voz alta a melhor resposta entre as escolhidas, com destaque e entre aspas duplas.
 
 	Importante: não mencione que as respostas foram filtradas ou que são apenas positivas. Apenas celebre os nomes e leia a melhor como se fosse natural!
